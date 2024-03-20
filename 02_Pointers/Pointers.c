@@ -1,26 +1,46 @@
 #include <stdio.h>
 #include <stdint.h>
 
-void accumulate(int64_t* sum, int64_t* num, int64_t value)
+struct accumulateData // 16 bytes big
 {
-	*sum += value;
-	(*num)++;
+	int64_t sum;// Sum of all vaulues
+	int64_t num;// number of sums
+};
+
+void newAccumulateData(struct accumulateData* data)
+{
+	data->sum = 0;
+	data->num = 0;
+}
+
+void accumulate(struct accumulateData* data, int64_t value)
+{
+	data->sum += value;
+	data->num ++;
+}
+
+int64_t accumulateResult(struct accumulateData* data)
+{
+	return data->sum / data->num;
 }
 
 int main()
 {
-	int64_t sum = 0;// Sum of all vaulues
-	int64_t num = 0;// number of sums
+	struct accumulateData data;
+	newAccumulateData(&data);
 	
-	accumulate(&sum, &num, 10);
-	accumulate(&sum, &num, 20);
+	accumulate(&data, 10);
+	accumulate(&data, 20);
+	accumulate(&data, 30);
+
 
 	
 
-	int64_t avg = sum / num;
+	int64_t avg = accumulateResult(&data);
 	printf("The average is: %lli", avg);
 	
 }
+
 /*
 (1) Pointer types:
 	<type>*		int64_t*
