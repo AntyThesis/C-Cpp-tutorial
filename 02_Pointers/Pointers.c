@@ -11,7 +11,7 @@ void newAccumulateData(struct accumulateData* data)
 {
 	data->sum = 0;
 	data->num = 0;
-}
+} 
 
 void accumulate(struct accumulateData* data, int64_t value)
 {
